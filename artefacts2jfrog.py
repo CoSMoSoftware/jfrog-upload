@@ -34,7 +34,7 @@ def upload_artefacts(file_path):
     file_name = os.path.split(file_path)[1]
     # add check of sha for downloads
     headers = {'content_type': 'application/octet-stream'}
-    jfrog_url_ = os.path.join(jfrog_url, file_name)
+    jfrog_url_ = jfrog_url + f"/{file_name}"
 
     with open(file_path, 'rb') as f:
         r = requests.put(jfrog_url_,
