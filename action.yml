@@ -1,0 +1,37 @@
+name: 'Upload to JFrog'
+description: 'Upload build artefacts to JFrog general registry.'
+inputs:
+  access_token:
+    description: 'Access token for JFrog service account. Find it in org secrets.'
+    required: true
+  user_name:
+    description: 'Define release tag.'
+    required: true
+  registry_url:
+    description: 'Define release repository.'
+    required: true
+  artefacts_patterns:
+    description: 'Define patterns for files which are going to be uploaded - pytyhon regex.'
+    required: false
+    default: '*'
+  action_shell:
+    required: false
+    default: 'bash'
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-python@v4
+      if: ${{ runner.environment == 'github-hosted' }}
+      with:
+        python-version: '3.11'
+
+    - name: 'Upload artefacts'
+      run: |
+        python3 ${{ github.action_path }}/artefacts2jfrog.py
+      shell: ${{ inputs.action_shell }}
+      env:
+        ARTEFACTS_PATTERNS: ${{ inputs.artefacts_patterns }}
+        REGISTRY_URL: ${{ inputs.registry_url }}
+        ACCESS_TOKEN: ${{ inputs.access_token }}
+        SERVICE_ACCOUNT: ${{ inputs.user_name }}
