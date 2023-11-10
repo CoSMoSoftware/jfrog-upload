@@ -16,8 +16,12 @@ inputs:
     default: '*'
   action_shell:
     description: 'Define shell for running python script'
-    required: true
+    required: false
     default: 'bash'
+  action_path:
+    description: 'Define action path'
+    required: false
+    default: ${{ github.action_path }}
 
 runs:
   using: "composite"
@@ -41,10 +45,11 @@ runs:
 
     - name: 'Upload artefacts'
       run: |
-        python3 ${{ github.action_path }}/artefacts2jfrog.py
+        python3 ${ACTION_PATH}/artefacts2jfrog.py
       shell: ${{ inputs.action_shell }}
       env:
         ARTEFACTS_PATTERNS: ${{ inputs.artefacts_patterns }}
         REGISTRY_URL: ${{ inputs.registry_url }}
         ACCESS_TOKEN: ${{ inputs.access_token }}
         SERVICE_ACCOUNT: ${{ inputs.user_name }}
+        ACTION_PATH: ${{ inputs.action_path }}
