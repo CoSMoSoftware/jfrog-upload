@@ -52,4 +52,4 @@ runs:
         REGISTRY_URL: ${{ inputs.registry_url }}
         ACCESS_TOKEN: ${{ inputs.access_token }}
         SERVICE_ACCOUNT: ${{ inputs.user_name }}
-        ACTION_PATH: ${{ inputs.action_path }}
+        ACTION_PATH: ${{ inputs.action_path || github.action_path }}
