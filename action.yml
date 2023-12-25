@@ -44,8 +44,21 @@ runs:
       shell: ${{ inputs.action_shell }}
 
     - name: 'Upload artefacts'
+      if: inputs.action_shell == 'bash'
       run: |
         python3 ${ACTION_PATH}/artefacts2jfrog.py
+      shell: ${{ inputs.action_shell }}
+      env:
+        ARTEFACTS_PATTERNS: ${{ inputs.artefacts_patterns }}
+        REGISTRY_URL: ${{ inputs.registry_url }}
+        ACCESS_TOKEN: ${{ inputs.access_token }}
+        SERVICE_ACCOUNT: ${{ inputs.user_name }}
+        ACTION_PATH: ${{ inputs.action_path || github.action_path }}
+
+    - name: 'Upload artefacts'
+      if: inputs.action_shell == 'powershell'
+      run: |
+        python3 $env:ACTION_PATH\artefacts2jfrog.py
       shell: ${{ inputs.action_shell }}
       env:
         ARTEFACTS_PATTERNS: ${{ inputs.artefacts_patterns }}
