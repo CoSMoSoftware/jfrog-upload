@@ -3,24 +3,18 @@ description: 'Upload build artefacts to JFrog general registry.'
 inputs:
   access_token:
     description: 'Access token for JFrog service account. Find it in org secrets.'
-    required: true
   user_name:
     description: 'Define release tag.'
-    required: true
   registry_url:
     description: 'Define release repository.'
-    required: true
   artefacts_patterns:
     description: 'Define patterns for files which are going to be uploaded - pytyhon regex.'
-    required: false
     default: '*'
   action_shell:
     description: 'Define shell for running python script'
-    required: false
     default: 'bash'
   action_path:
     description: 'Define action path'
-    required: false
     default: ${{ github.action_path }}
 
 runs:
