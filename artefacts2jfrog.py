@@ -19,12 +19,16 @@ def base_path(path_):
     return path_
 
 def find_artefacts():
-    artefacts = list()
-    for pattern in patterns:
-        for file_path in glob.iglob(pattern):
-            artefacts += [file_path]
+  artefacts = list()
+  for pattern in patterns:
+    for file_path in glob.iglob(pattern):
+      # Check if we already found this artifact with previous search
+      if file_path in arefacts:
+        print("This file_path was alredy found by another pattern!")
+      else:
+        artefacts += [file_path]
 
-    return artefacts
+  return artefacts
 
 def upload_artefacts(file_path):
     jfrog_url = os.environ["REGISTRY_URL"]
